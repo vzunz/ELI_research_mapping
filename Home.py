@@ -57,7 +57,7 @@ with col1:
             "Go to research areas",
             use_container_width=True
         ):
-            st.switch_page("pages/2_Research_groups.py")
+            st.switch_page("pages/1_Research_areas.py")
     
     
 with col2:
