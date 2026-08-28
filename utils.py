@@ -159,10 +159,6 @@ def render_researcher_grid(
             color = pole_colors.get(pole, "#777777")
 
             score = row["score"] if ("score" in row and row["score"] is not None) else None
-            dots_html = (
-                f'<p style="margin:4px 0 0 0;font-size:1.1rem;letter-spacing:2px;">{score_to_dots(score)}</p>'
-                if score is not None else ""
-            )
 
             with col:
             
@@ -172,6 +168,10 @@ def render_researcher_grid(
                         f':color[{pole}]{{foreground="white" background={color}}}',
                         text_alignment="center"
                         )
+                        
+                    st.markdown(
+                       score_to_dots(score),text_alignment="center"
+                    )
 
                     if st.button(
                         f"Open scientific profile",
