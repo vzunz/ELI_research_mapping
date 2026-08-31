@@ -221,6 +221,7 @@ def sanitize(text):
     text = unicodedata.normalize("NFKD", str(text))
     text = text.encode("ascii", "ignore").decode("ascii")
     text = text.replace(" ", "_")
+    text = text.replace("-", "_")
     text = re.sub(r"[^A-Za-z0-9_-]", "", text)
 
     return text
