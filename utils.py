@@ -250,7 +250,7 @@ def display_profile(researcher, subdomain_map):
 
     st.divider()
     
-    st.subheader(f"Research domains of {fullname}")
+    st.subheader(f"Research areas of {fullname}")
 
     # ==================================================
     # Construction d'une structure regroupée par domaine
