@@ -45,8 +45,8 @@ st.markdown(
 col1, col2 = st.columns(2)
 
 with col1:
-    with st.container(height=250):
-        st.subheader("Research areas")
+    with st.container(border=True):
+        st.subheader("Research areas",anchor=False)
         st.write(
             "Browse the 10 research areas. Click a research area to see "
             "the academics active in it, with an indicator "
@@ -61,20 +61,21 @@ with col1:
     
     
 with col2:
-    with st.container(height=250):
-        st.subheader("Research groups")
+    with st.container(border=True):
+        st.subheader("Research groups",anchor=False)
         st.write(
             "Browse all research groups at once, regardless of research areas — sortable "
             "by academic name or by pole. Click an academic's card to open their full "
             "scientific profile."
         )
+        st.markdown('<br>',unsafe_allow_html=True)
         if st.button(
             "Go to research groups",
             use_container_width=True
         ):
             st.switch_page("pages/2_Research_groups.py")
 
-st.subheader("How was the classification performed?")
+st.subheader("How was the classification performed?",anchor=False)
 
 st.write(
     "The classification approach used here combines bibliometric keyword analysis with AI-assisted thematic "
@@ -83,13 +84,13 @@ st.write(
 
 st.write(
     "For each academic, "
-    "a list of scientific publications was retrieved from the Scopus database. "
-    "For academics with an insufficient number of publications indexed in [Scopus](https://www.scopus.com/), "
-    "publication data were retrieved from the [OpenAlex](https://openalex.org) database. "
+    "a list of scientific publications was retrieved from the [Scopus](https://www.scopus.com/) database. "
     "A keyword analysis was then performed using [VOSviewer](https://www.vosviewer.com), based on both Author "
     "Keywords and Index Keywords. This analysis generated a keywords occurrence map "
     "for each academic, highlighting the most prominent research topics within their "
     "publication record."
+    "For academics with an insufficient number of publications indexed in Scopus, "
+    "publication data were retrieved from the [OpenAlex](https://openalex.org) database. "
     )
     
 st.write(

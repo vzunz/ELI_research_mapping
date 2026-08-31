@@ -46,7 +46,7 @@ if "selected_researcher" not in st.session_state:
 # HEADER
 # ====================================================
 
-st.title("ELI research areas")
+st.title("ELI research areas",anchor=False)
 
 # ====================================================
 # PAGE 1 : DOMAINES

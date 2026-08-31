@@ -49,7 +49,7 @@ header_logo()
 # HEADER
 # ------------------------------------------------------------------
 
-st.title("Research groups")
+st.title("Research groups",anchor=False)
 
 # ==================================================
 # CAS 1 : UN CHERCHEUR EST SELECTIONNE -> PROFIL COMPLET

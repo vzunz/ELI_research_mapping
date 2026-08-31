@@ -1,14 +1,11 @@
 # utils.py
 
 import streamlit as st
-import streamlit.components.v1 as components
 import pandas as pd
 import unicodedata
 import re
-import base64
 from pathlib import Path
 from collections import OrderedDict
-from PIL import Image
 
 
 POLE_COLORS = {
@@ -26,7 +23,7 @@ def header_logo():
         st.image("images/logo_ELI.png", width=120)
 
     with col2:
-        st.title(f':color[{"Earth and Life Institute"}]{{foreground="rgb(96,136,161)"}}')
+        st.title(f':color[{"Earth and Life Institute"}]{{foreground="rgb(96,136,161)"}}',anchor=False)
         st.markdown(
         f':color[{"Research areas explorer app"}]{{foreground="white" background="rgb(119,191,238)"}}'
         )    
@@ -107,6 +104,8 @@ def strip_domain_prefix(domain_title):
 def score_to_dots(score):
     """Transforme un score numérique en 5 pastilles pleines/vides (●●●○○),
     reprend la logique du script original ELI_research_area_map_01.py."""
+    if score is None:
+        return ""
     n = min(5, max(1, int(round(score))))
     return "●" * n + "○" * (5 - n)
 
@@ -162,16 +161,20 @@ def render_researcher_grid(
 
             with col:
             
-                with st.container(height=250):
-                    st.subheader(fullname,text_alignment="center")
+                with st.container(border=True):
+
+                    st.markdown(f'<p style="text-align:center; font-size:16px">{row['prenom']}</p>', unsafe_allow_html=True)
+                    st.markdown(f'<p style="text-align:center; font-size:20px"><b>{row['nom']}</b></p>', unsafe_allow_html=True)
+
                     st.markdown(
                         f':color[{pole}]{{foreground="white" background={color}}}',
                         text_alignment="center"
                         )
                         
-                    st.markdown(
-                       score_to_dots(score),text_alignment="center"
-                    )
+                    if score is not None:
+                        st.markdown(
+                           score_to_dots(score), text_alignment="center"
+                        )
 
                     if st.button(
                         f"Open scientific profile",
@@ -184,123 +187,17 @@ def render_researcher_grid(
                         st.rerun()
 
 
-@st.cache_data(show_spinner=False)
-def _image_to_data_uri(path):
-    """Encode une image locale en data URI base64, pour pouvoir l'intégrer
-    dans du HTML/JS injecté via components.html (pas d'accès direct au
-    système de fichiers depuis l'iframe)."""
-
-    suffix = Path(path).suffix.lower().lstrip(".")
-    mime = "jpeg" if suffix in ("jpg", "jpeg") else suffix
-
-    with open(path, "rb") as f:
-        encoded = base64.b64encode(f.read()).decode("utf-8")
-
-    return f"data:image/{mime};base64,{encoded}"
-
-
-def display_magnifier_image(image_path, max_width=1000, zoom=2.5, glass_size=180):
+def display_full_image(image_path, caption=None, width=None):
     """
-    Affiche une image avec une vraie loupe : au survol, une lentille
-    circulaire suit précisément le curseur et affiche un zoom local de la
-    zone survolée (et non toute l'image qui s'agrandit).
-
-    Implémenté via streamlit.components.v1.html plutôt que st.markdown, car
-    le JavaScript inséré via st.markdown(unsafe_allow_html=True) ne s'exécute
-    pas dans le navigateur (limitation de Streamlit) - components.html rend
-    le contenu dans une iframe où le JS fonctionne normalement.
+    Affiche l'image du chercheur avec st.image(). Streamlit ajoute
+    automatiquement une icône d'agrandissement (plein écran) sur l'image,
+    utilisable au clic (ordinateur) comme au tap (smartphone, tablette) -
+    pas besoin de logique JS custom, donc compatible partout.
     """
-
-    data_uri = _image_to_data_uri(image_path)
-
-    with Image.open(image_path) as im:
-        orig_w, orig_h = im.size
-
-    display_w = min(max_width, orig_w)
-    display_h = int(orig_h * (display_w / orig_w)) if orig_w else 0
-
-    html = f"""
-    <style>
-        html, body {{ margin:0; padding:0; }}
-        .img-magnifier-container {{
-            position: relative;
-            width: {display_w}px;
-            height: {display_h}px;
-        }}
-        .img-magnifier-container img {{
-            width: {display_w}px;
-            height: {display_h}px;
-            display: block;
-            border-radius: 6px;
-        }}
-        .img-magnifier-glass {{
-            position: absolute;
-            border: 3px solid #ffffff;
-            border-radius: 50%;
-            cursor: none;
-            width: {glass_size}px;
-            height: {glass_size}px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.45);
-            display: none;
-            pointer-events: none;
-        }}
-    </style>
-
-    <div class="img-magnifier-container">
-        <img id="magnifier-img" src="{data_uri}">
-    </div>
-
-    <script>
-    (function() {{
-        var img = document.getElementById("magnifier-img");
-        var zoom = {zoom};
-
-        var glass = document.createElement("DIV");
-        glass.setAttribute("class", "img-magnifier-glass");
-        img.parentElement.appendChild(glass);
-
-        glass.style.backgroundImage = "url('" + img.src + "')";
-        glass.style.backgroundRepeat = "no-repeat";
-        glass.style.backgroundSize =
-            (img.width * zoom) + "px " + (img.height * zoom) + "px";
-
-        var w = glass.offsetWidth / 2;
-        var h = glass.offsetHeight / 2;
-
-        function getCursorPos(e) {{
-            var a = img.getBoundingClientRect();
-            var x = e.pageX - a.left - window.pageXOffset;
-            var y = e.pageY - a.top - window.pageYOffset;
-            return {{x: x, y: y}};
-        }}
-
-        function moveMagnifier(e) {{
-            e.preventDefault();
-            var pos = getCursorPos(e);
-            var x = pos.x;
-            var y = pos.y;
-
-            if (x > img.width - (w / zoom))  {{ x = img.width - (w / zoom); }}
-            if (x < w / zoom)                {{ x = w / zoom; }}
-            if (y > img.height - (h / zoom)) {{ y = img.height - (h / zoom); }}
-            if (y < h / zoom)                {{ y = h / zoom; }}
-
-            glass.style.left = (x - w) + "px";
-            glass.style.top = (y - h) + "px";
-            glass.style.display = "block";
-            glass.style.backgroundPosition =
-                "-" + ((x * zoom) - w) + "px -" + ((y * zoom) - h) + "px";
-        }}
-
-        img.addEventListener("mousemove", moveMagnifier);
-        img.addEventListener("mouseleave", function() {{
-            glass.style.display = "none";
-        }});
-    }})();
-    </script>
-    """
-
-    components.html(html, height=display_h + 10, scrolling=False)
+    if width is not None:
+        st.image(str(image_path), caption=caption, width=width)
+    else:
+        st.image(str(image_path), caption=caption, use_container_width=True)
 
 
 def strip_keyword_weights(keywords):
@@ -345,7 +242,7 @@ def display_profile(researcher, subdomain_map):
     )
 
     if image_file.exists():
-        display_magnifier_image(image_file, max_width=1000, zoom=2.5, glass_size=180)
+        display_full_image(image_file)
     else:
         st.warning("Image not available")
 
@@ -370,9 +267,9 @@ def display_profile(researcher, subdomain_map):
         info = subdomain_map.get(sd, {})
         
         domain_title = info.get(
-    		"domain_title",
-    		"Unknown domain"
-		)
+            "domain_title",
+            "Unknown domain"
+        )
 
         subdomain_title = info.get(
             "subdomain_title",
