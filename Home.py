@@ -88,7 +88,7 @@ st.write(
     "A keyword analysis was then performed using [VOSviewer](https://www.vosviewer.com), based on both Author "
     "Keywords and Index Keywords. This analysis generated a keywords occurrence map "
     "for each academic, highlighting the most prominent research topics within their "
-    "publication record."
+    "publication record. "
     "For academics with an insufficient number of publications indexed in Scopus, "
     "publication data were retrieved from the [OpenAlex](https://openalex.org) database. "
     )
