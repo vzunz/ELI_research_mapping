@@ -297,16 +297,7 @@ def display_profile(researcher, subdomain_map):
     prenom_key = sanitize(researcher["prenom"])
     nom_key = sanitize(researcher["nom"])
 
-    image_file = Path(
-        f"images/vosviewer_map_with_title_{nom_key}_{prenom_key}.png"
-    )
-
-    if image_file.exists():
-        display_full_image(image_file)
-    else:
-        st.warning("Image not available")
-
-    with st.expander("🔎 Explore the interactive keyword map (VOSviewer)"):
+    with st.expander("Explore the interactive keywords map with VOSviewer"):
         display_vosviewer_iframe(researcher["nom"], researcher["prenom"])
 
 
