@@ -227,6 +227,65 @@ def sanitize(text):
     return text
 
 
+# ------------------------------------------------------------------
+# VOSviewer interactif (fichiers map/network hébergés sur GitHub)
+# ------------------------------------------------------------------
+
+# Base URL publique où sont hébergés les fichiers
+# vosviewer_map_<NOM>_<PRENOM>.txt et vosviewer_network_<NOM>_<PRENOM>.txt.
+#
+# À adapter avec ton propre dépôt GitHub. Deux options :
+#
+#   GitHub raw :
+#   "https://raw.githubusercontent.com/<user>/<repo>/main/<dossier>"
+#
+#   jsDelivr (recommandé - CDN mis en cache, souvent plus rapide/robuste) :
+#   "https://cdn.jsdelivr.net/gh/<user>/<repo>@main/<dossier>"
+VOSVIEWER_DATA_BASE_URL = "https://cdn.jsdelivr.net/gh/vzunz/ELI_research_mapping@branch_01/ALL_vosviewer_map_files"
+
+
+def vosviewer_urls(nom, prenom, base_url=VOSVIEWER_DATA_BASE_URL):
+    """
+    Construit les URLs publiques des fichiers map/network VOSviewer d'un
+    chercheur, à partir de son nom/prénom (même normalisation que sanitize(),
+    et même convention de nommage que le script copy_vosviewer_maps.sh :
+    vosviewer_map_<NOM>_<PRENOM>.txt / vosviewer_network_<NOM>_<PRENOM>.txt).
+    """
+    nom_key = sanitize(nom)
+    prenom_key = sanitize(prenom)
+
+    map_url = f"{base_url}/vosviewer_map_{nom_key}_{prenom_key}.txt"
+    network_url = f"{base_url}/vosviewer_network_{nom_key}_{prenom_key}.txt"
+
+    return map_url, network_url
+
+
+def display_vosviewer_iframe(nom, prenom, base_url=VOSVIEWER_DATA_BASE_URL, height=650):
+    """
+    Affiche la carte VOSviewer interactive d'un chercheur (co-occurrence de
+    mots-clés), à partir de ses fichiers map/network hébergés publiquement
+    (GitHub / jsDelivr), via VOSviewer Online.
+    """
+
+    map_url, network_url = vosviewer_urls(nom, prenom, base_url)
+
+    vos_src = (
+        "https://app.vosviewer.com/?"
+        f"map={map_url}&network={network_url}&simple_ui=true&item_color=2"
+    )
+
+    st.markdown(
+        f"""
+        <iframe allowfullscreen="true"
+        src="{vos_src}"
+        width="100%" height="{height}"
+        style="border: 1px solid #ddd; max-width: 1200px; min-height: {height}px">
+        </iframe>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def display_profile(researcher, subdomain_map):
 
     fullname = (
@@ -234,23 +293,23 @@ def display_profile(researcher, subdomain_map):
         f"{researcher['nom']}"
     )
 
-
-    prenom_key = sanitize(researcher["prenom"])
-    nom_key = sanitize(researcher["nom"])
-
-    image_file = Path(
-        f"images/vosviewer_map_with_title_{nom_key}_{prenom_key}.png"
+    pole_colors = POLE_COLORS
+    pole = researcher['pole']
+    color = pole_colors.get(pole, "#777777")
+    
+    st.markdown(
+        f'<span style="font-size:1.6rem; font-weight:700;">'
+        f'{researcher["prenom"]} {researcher["nom"]}</span>'
+        f'&nbsp;&nbsp;&nbsp;&nbsp;'
+        f':color[{pole}]{{foreground="white" background={color}}}',
+        unsafe_allow_html=True,
+        text_alignment="left"
     )
 
-    if image_file.exists():
-        display_full_image(image_file)
-    else:
-        st.warning("Image not available")
-
-
-    st.divider()
+    st.subheader("Research areas",anchor=None)
     
-    st.subheader(f"Research areas of {fullname}")
+    prenom_key = sanitize(researcher["prenom"])
+    nom_key = sanitize(researcher["nom"])
 
     # ==================================================
     # Construction d'une structure regroupée par domaine
@@ -316,5 +375,11 @@ def display_profile(researcher, subdomain_map):
             
                 st.markdown(
                     f"**{item['title']}**")
+
+    #Vosviewer map
+    st.subheader("Keywords mapping")
+    st.caption("Explore the interactive keywords map with VOSviewer")
+    display_vosviewer_iframe(researcher["nom"], researcher["prenom"])
+                    
 
             
