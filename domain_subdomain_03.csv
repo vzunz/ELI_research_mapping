@@ -29,7 +29,7 @@ D6.2.;Agroecology and sustainable farming systems;D6. Agriculture, agronomy and 
 D6.3.;Plant health and crop protection;D6. Agriculture, agronomy and food systems
 D6.4.;Livestock and integrated agricultural systems;D6. Agriculture, agronomy and food systems
 D6.5.;Food systems, food security and nutrition;D6. Agriculture, agronomy and food systems
-D7.1;Pollutants and contaminants;D7. Environmental pollution and contamination
+D7.1.;Pollutants and contaminants;D7. Environmental pollution and contamination
 D7.2.;Heavy metals;D7. Environmental pollution and contamination
 D7.3.;Environmental quality;D7. Environmental pollution and contamination
 D7.4.;Elemental biogeochemistry;D7. Environmental pollution and contamination
@@ -47,5 +47,5 @@ D9.5.;GIS and spatial analysis;D9. Data Science, modelling, and artificial intel
 D10.1.;Earth observation and satellite remote sensing;D10. Remote sensing
 D10.2.;Environmental monitoring and change detection;D10. Remote sensing
 D10.3.;Remote sensing for agriculture, ecosystems and climate;D10. Remote sensing
-D10.4;Radar remote sensing;D10. Remote sensing
+D10.4.;Radar remote sensing;D10. Remote sensing
 D10.5.;Geophysics and subsurface sensing;D10. Remote sensing
