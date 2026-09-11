@@ -238,9 +238,9 @@ def display_profile(researcher, subdomain_map):
     prenom_key = sanitize(researcher["prenom"])
     nom_key = sanitize(researcher["nom"])
 
-    #image_file = Path(
-    #    f"images/vosviewer_map_with_title_{nom_key}_{prenom_key}.png"
-    #)
+    image_file = Path(
+        f"images/vosviewer_map_with_title_{nom_key}_{prenom_key}.png"
+    )
 
     st.markdown(
         """
@@ -252,10 +252,10 @@ def display_profile(researcher, subdomain_map):
         """
     )
 
-    if image_file.exists():
-        display_full_image(image_file)
-    else:
-        st.warning("Image not available")
+    #if image_file.exists():
+     #   display_full_image(image_file)
+    #else:
+     #   st.warning("Image not available")
 
 
     st.divider()
