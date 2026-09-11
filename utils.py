@@ -298,7 +298,7 @@ def display_profile(researcher, subdomain_map):
     color = pole_colors.get(pole, "#777777")
 
     st.markdown(
-        f'<span style="font-size:1.6rem; font-weight:700;">'
+        f'<span style="font-size:2rem; font-weight:700;">'
         f'{researcher["prenom"]} {researcher["nom"]}</span>'
         f'&nbsp;&nbsp;&nbsp;&nbsp;'
         f':color[{pole}]{{foreground="white" background={color}}}',
