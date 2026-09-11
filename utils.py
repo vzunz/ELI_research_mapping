@@ -302,7 +302,10 @@ def display_profile(researcher, subdomain_map):
         f':color[{pole}]{{foreground="white" background={color}}}',
         text_alignment="left"
     )
+    st.markdown('#')
 
+    st.subheader("Research areas")
+    
     prenom_key = sanitize(researcher["prenom"])
     nom_key = sanitize(researcher["nom"])
 
@@ -372,8 +375,9 @@ def display_profile(researcher, subdomain_map):
                     f"**{item['title']}**")
 
     #Vosviewer map
-    with st.expander("Explore the interactive keywords map with VOSviewer"):
-        display_vosviewer_iframe(researcher["nom"], researcher["prenom"])
+    st.subheader("Keywords mapping")
+    st.markdown("Explore the interactive keywords map with VOSviewer")
+    display_vosviewer_iframe(researcher["nom"], researcher["prenom"])
                     
 
             
