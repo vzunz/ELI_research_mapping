@@ -297,7 +297,7 @@ def display_profile(researcher, subdomain_map):
     pole = researcher['pole']
     color = pole_colors.get(pole, "#777777")
 
-    col1,col2,col3=st.columns(3,1,4)
+    col1,col2,col3=st.columns([3,1,4])
 
     with col1:
         st.markdown(
