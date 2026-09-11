@@ -271,7 +271,7 @@ def display_vosviewer_iframe(nom, prenom, base_url=VOSVIEWER_DATA_BASE_URL, heig
 
     vos_src = (
         "https://app.vosviewer.com/?"
-        f"map={map_url}&network={network_url}&simple_ui=true"
+        f"map={map_url}&network={network_url}&simple_ui=true&item_color=2"
     )
 
     st.markdown(
