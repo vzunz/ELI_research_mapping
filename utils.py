@@ -295,6 +295,11 @@ def display_profile(researcher, subdomain_map):
 
     st.subheader(f"Research areas of {fullname}")
 
+    st.markdown(
+        f':color[{researcher['pole']}]{{foreground="white" background={color}}}',
+       text_alignment="center"
+    )
+
     prenom_key = sanitize(researcher["prenom"])
     nom_key = sanitize(researcher["nom"])
 
