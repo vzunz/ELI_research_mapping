@@ -303,7 +303,7 @@ def display_profile(researcher, subdomain_map):
         text_alignment="left",anchors=False
     )
 
-    st.subheader("Research areas")
+    st.subheader("Research areas",anchors=False)
     
     prenom_key = sanitize(researcher["prenom"])
     nom_key = sanitize(researcher["nom"])
