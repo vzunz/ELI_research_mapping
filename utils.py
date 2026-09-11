@@ -302,7 +302,6 @@ def display_profile(researcher, subdomain_map):
         f':color[{pole}]{{foreground="white" background={color}}}',
         text_alignment="left"
     )
-    st.markdown('#')
 
     st.subheader("Research areas")
     
@@ -376,7 +375,7 @@ def display_profile(researcher, subdomain_map):
 
     #Vosviewer map
     st.subheader("Keywords mapping")
-    st.markdown("Explore the interactive keywords map with VOSviewer")
+    st.caption("Explore the interactive keywords map with VOSviewer")
     display_vosviewer_iframe(researcher["nom"], researcher["prenom"])
                     
 
