@@ -245,7 +245,9 @@ def display_profile(researcher, subdomain_map):
     st.markdown(
     """
     <iframe allowfullscreen="true"
-    src="https://app.vosviewer.com/?map=https://uclouvain-my.sharepoint.com/:t:/r/personal/violette_zunz_uclouvain_be/Documents/violette/research_area_ELI/ELI_KEYWORDS_ANALYSIS/ALL_vosviewer_map_files/vosviewer_map_Agnan_Yannick.txt&network=https://uclouvain-my.sharepoint.com/:t:/r/personal/violette_zunz_uclouvain_be/Documents/violette/research_area_ELI/ELI_KEYWORDS_ANALYSIS/ALL_vosviewer_map_files/vosviewer_network_Agnan_Yannick.txt&simple_ui=true"
+    src="https://app.vosviewer.com/?
+    map=https://drive.google.com/file/d/1mU-wK51SIdNABqojORAU7NInaehgP2lC/view?usp=sharing
+    &network=https://drive.google.com/file/d/1-ij2BNsoIJ8F-57zpJGlOtdRGA2FCA3-/view?usp=sharing"
     width="100%" height="75%"
     style="border: 1px solid #ddd; max-width: 1200px; min-height: 500px">
     </iframe>
