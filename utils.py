@@ -294,7 +294,7 @@ def display_profile(researcher, subdomain_map):
     )
 
     st.subheader(f"Research areas of {fullname}")
-
+    pole_colors=POLE_COLORS
     pole=researcher['pole']
     color = pole_colors.get(pole, "#777777")
 
