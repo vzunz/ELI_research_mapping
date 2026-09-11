@@ -293,17 +293,10 @@ def display_profile(researcher, subdomain_map):
         f"{researcher['nom']}"
     )
 
+    st.subheader(f"Research areas of {fullname}")
 
     prenom_key = sanitize(researcher["prenom"])
     nom_key = sanitize(researcher["nom"])
-
-    with st.expander("Explore the interactive keywords map with VOSviewer"):
-        display_vosviewer_iframe(researcher["nom"], researcher["prenom"])
-
-
-    st.divider()
-    
-    st.subheader(f"Research areas of {fullname}")
 
     # ==================================================
     # Construction d'une structure regroupée par domaine
@@ -369,5 +362,10 @@ def display_profile(researcher, subdomain_map):
             
                 st.markdown(
                     f"**{item['title']}**")
+
+    #Vosviewer map
+    with st.expander("Explore the interactive keywords map with VOSviewer"):
+        display_vosviewer_iframe(researcher["nom"], researcher["prenom"])
+                    
 
             
