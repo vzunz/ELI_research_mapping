@@ -238,9 +238,16 @@ def display_profile(researcher, subdomain_map):
     prenom_key = sanitize(researcher["prenom"])
     nom_key = sanitize(researcher["nom"])
 
-    image_file = Path(
-        f"images/vosviewer_map_with_title_{nom_key}_{prenom_key}.png"
-    )
+    #image_file = Path(
+    #    f"images/vosviewer_map_with_title_{nom_key}_{prenom_key}.png"
+    #)
+
+    st.markdown(
+        f'<iframe allowfullscreen="true"
+        src="https://app.vosviewer.com/?json=https://app.vosviewer.com/data/QSS_SM_2020-2021_co-authorship_network.json&simple_ui=true"
+        width="100%" height="75%"
+        style="border: 1px solid #ddd; max-width: 1200px; min-height: 500px">
+        </iframe>', unsafe_allow_html=True)
 
     if image_file.exists():
         display_full_image(image_file)
