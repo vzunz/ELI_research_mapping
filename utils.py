@@ -243,15 +243,15 @@ def display_profile(researcher, subdomain_map):
     )
 
     st.markdown(
-        """
-        <iframe allowfullscreen="true"
-        src="https://app.vosviewer.com/?json=https://app.vosviewer.com/data/QSS_SM_2020-2021_co-authorship_network.json&simple_ui=true"
-        width="100%" height="75%"
-        style="border: 1px solid #ddd; max-width: 1200px; min-height: 500px">
-        </iframe>
-        """,
-        unsafe_allow_html=True,
-    )
+    """
+    <iframe allowfullscreen="true"
+    src="https://app.vosviewer.com/?map=https://uclouvain-my.sharepoint.com/:t:/r/personal/violette_zunz_uclouvain_be/Documents/violette/research_area_ELI/ELI_KEYWORDS_ANALYSIS/ALL_vosviewer_map_files/vosviewer_map_Agnan_Yannick.txt&network=https://uclouvain-my.sharepoint.com/:t:/r/personal/violette_zunz_uclouvain_be/Documents/violette/research_area_ELI/ELI_KEYWORDS_ANALYSIS/ALL_vosviewer_map_files/vosviewer_network_Agnan_Yannick.txt&simple_ui=true"
+    width="100%" height="75%"
+    style="border: 1px solid #ddd; max-width: 1200px; min-height: 500px">
+    </iframe>
+    """,
+    unsafe_allow_html=True,
+)
 
     #if image_file.exists():
      #   display_full_image(image_file)
