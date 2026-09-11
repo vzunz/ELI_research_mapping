@@ -368,7 +368,7 @@ def display_profile(researcher, subdomain_map):
             if item["keywords"]:
 
                 st.markdown(
-                    f"**{item['title']}** • Keywords: {strip_keyword_weights(item['keywords'])}"
+                    f"**{item['title']} ** • Keywords: {strip_keyword_weights(item['keywords'])}"
                 )
                 
             else:
