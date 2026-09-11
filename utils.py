@@ -227,6 +227,65 @@ def sanitize(text):
     return text
 
 
+# ------------------------------------------------------------------
+# VOSviewer interactif (fichiers map/network hébergés sur GitHub)
+# ------------------------------------------------------------------
+
+# Base URL publique où sont hébergés les fichiers
+# vosviewer_map_<NOM>_<PRENOM>.txt et vosviewer_network_<NOM>_<PRENOM>.txt.
+#
+# À adapter avec ton propre dépôt GitHub. Deux options :
+#
+#   GitHub raw :
+#   "https://raw.githubusercontent.com/<user>/<repo>/main/<dossier>"
+#
+#   jsDelivr (recommandé - CDN mis en cache, souvent plus rapide/robuste) :
+#   "https://cdn.jsdelivr.net/gh/<user>/<repo>@main/<dossier>"
+VOSVIEWER_DATA_BASE_URL = "https://cdn.jsdelivr.net/gh/<user>/<repo>@main/vosviewer_maps"
+
+
+def vosviewer_urls(nom, prenom, base_url=VOSVIEWER_DATA_BASE_URL):
+    """
+    Construit les URLs publiques des fichiers map/network VOSviewer d'un
+    chercheur, à partir de son nom/prénom (même normalisation que sanitize(),
+    et même convention de nommage que le script copy_vosviewer_maps.sh :
+    vosviewer_map_<NOM>_<PRENOM>.txt / vosviewer_network_<NOM>_<PRENOM>.txt).
+    """
+    nom_key = sanitize(nom)
+    prenom_key = sanitize(prenom)
+
+    map_url = f"{base_url}/vosviewer_map_{nom_key}_{prenom_key}.txt"
+    network_url = f"{base_url}/vosviewer_network_{nom_key}_{prenom_key}.txt"
+
+    return map_url, network_url
+
+
+def display_vosviewer_iframe(nom, prenom, base_url=VOSVIEWER_DATA_BASE_URL, height=650):
+    """
+    Affiche la carte VOSviewer interactive d'un chercheur (co-occurrence de
+    mots-clés), à partir de ses fichiers map/network hébergés publiquement
+    (GitHub / jsDelivr), via VOSviewer Online.
+    """
+
+    map_url, network_url = vosviewer_urls(nom, prenom, base_url)
+
+    vos_src = (
+        "https://app.vosviewer.com/?"
+        f"map={map_url}&network={network_url}&simple_ui=true"
+    )
+
+    st.markdown(
+        f"""
+        <iframe allowfullscreen="true"
+        src="{vos_src}"
+        width="100%" height="{height}"
+        style="border: 1px solid #ddd; max-width: 1200px; min-height: {height}px">
+        </iframe>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def display_profile(researcher, subdomain_map):
 
     fullname = (
@@ -242,23 +301,13 @@ def display_profile(researcher, subdomain_map):
         f"images/vosviewer_map_with_title_{nom_key}_{prenom_key}.png"
     )
 
-    st.markdown(
-    """
-    <iframe allowfullscreen="true"
-    src="https://app.vosviewer.com/?
-    map=https://drive.google.com/uc?id=1mU-wK51SIdNABqojORAU7NInaehgP2lC
-    &network=https://drive.google.com/uc?id=1-ij2BNsoIJ8F-57zpJGlOtdRGA2FCA3-"
-    width="100%" height="75%"
-    style="border: 1px solid #ddd; max-width: 1200px; min-height: 500px">
-    </iframe>
-    """,
-    unsafe_allow_html=True,
-)
+    if image_file.exists():
+        display_full_image(image_file)
+    else:
+        st.warning("Image not available")
 
-    #if image_file.exists():
-     #   display_full_image(image_file)
-    #else:
-     #   st.warning("Image not available")
+    with st.expander("🔎 Explore the interactive keyword map (VOSviewer)"):
+        display_vosviewer_iframe(researcher["nom"], researcher["prenom"])
 
 
     st.divider()
