@@ -241,7 +241,7 @@ def sanitize(text):
 #
 #   jsDelivr (recommandé - CDN mis en cache, souvent plus rapide/robuste) :
 #   "https://cdn.jsdelivr.net/gh/<user>/<repo>@main/<dossier>"
-VOSVIEWER_DATA_BASE_URL = "https://cdn.jsdelivr.net/gh/vzunz/ELI_research_mapping@branch_01/ALL_vosviewer_map_files"
+VOSVIEWER_DATA_BASE_URL = "https://cdn.jsdelivr.net/gh/vzunz/ELI_research_mapping@main/ALL_vosviewer_map_files"
 
 
 def vosviewer_urls(nom, prenom, base_url=VOSVIEWER_DATA_BASE_URL):
