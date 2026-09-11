@@ -302,7 +302,7 @@ def display_profile(researcher, subdomain_map):
     with col1:
         st.markdown(
             f'<span style="font-size:2rem; font-weight:700;">'
-            f'{researcher["prenom"]} {researcher["nom"]}</span>'
+            f'{researcher["prenom"]} {researcher["nom"]}</span>',
             unsafe_allow_html=True,
             text_alignment="left"
         )
