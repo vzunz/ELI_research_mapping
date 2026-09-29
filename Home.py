@@ -29,6 +29,14 @@ domain_map, subdomain_map = get_domain_mapping(domains_df)
 
 header_logo()
 
+st.info(
+    "**Beta version — work in progress.** This application is still under active "
+    "development. The research area classification was generated through an automated, "
+    "AI-assisted process and may not fully reflect the scope of each research group. "
+    "Content, features and results may change as the application evolves.",
+    icon="🚧",
+)
+
 #st.title("ELI Research Areas")
 
 st.markdown(
