@@ -8,7 +8,6 @@ from utils import (load_data, extract_domain, get_domain_mapping,
 
 st.set_page_config(
     page_title="ELI Research Areas",
-	page_icon="images/logo_ELI.png",
     layout="wide"
 )
 
