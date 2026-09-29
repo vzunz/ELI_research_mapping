@@ -5,6 +5,7 @@ from utils import display_profile, render_researcher_grid, POLE_COLORS, load_dat
 
 st.set_page_config(
     page_title="Research groups",
+    page_icon="images/logo_ELI.png",
     layout="wide"
 )
 
