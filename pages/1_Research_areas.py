@@ -9,7 +9,6 @@ from utils import (display_profile, render_researcher_grid, header_logo,
 
 st.set_page_config(
     page_title="ELI research areas",
-    page_icon="images/logo_ELI.png",
     layout="wide"
 )
 
