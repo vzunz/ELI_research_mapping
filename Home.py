@@ -89,9 +89,7 @@ st.write(
     "Each academic is profiled from two sources: their **scientific publications** and the "
     "**research projects** they have led at UCLouvain. Both are mapped onto a common grid of "
     "10 research areas and 46 sub-areas, shown below. This grid was built from the topics "
-    "that actually appear in ELI publications and projects, so that every research group "
-    "finds its place in it (marine biology, microbiology, forests, planetary science, "
-    "One Health, etc.)."
+    "that actually appear in ELI publications and projects."
     )
 
 st.write(
@@ -100,8 +98,7 @@ st.write(
     "[OpenAlex](https://openalex.org) (these count for half, as OpenAlex attributions are "
     "less reliable). Each publication is assigned to one or more sub-areas from its "
     "author and index keywords, or, when no keyword is informative, from its title and "
-    "abstract. Overly generic keywords (e.g. *article*, *human*, *soil*, country names) are "
-    "ignored. Each publication counts once and is shared among the sub-areas it covers."
+    "abstract. Each publication counts once and is shared among the sub-areas it covers."
     )
 
 st.write(
