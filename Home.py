@@ -31,9 +31,9 @@ header_logo()
 
 st.info(
     "**Beta version — work in progress.** This application is still under active "
-    "development. The research area classification was generated through an automated, "
-    "AI-assisted process and may not fully reflect the scope of each research group. "
-    "Content, features and results may change as the application evolves.",
+    "development. The research area classification is computed automatically from "
+    "publications and research projects and may not fully reflect the scope of each "
+    "research group. Content, features and results may change as the application evolves.",
     icon="🚧",
 )
 
@@ -86,39 +86,51 @@ with col2:
 st.subheader("How was the classification performed?",anchor=False)
 
 st.write(
-    "The classification approach used here combines bibliometric keyword analysis with AI-assisted thematic "
-    "classification.\n"
+    "Each academic is profiled from two sources: their **scientific publications** and the "
+    "**research projects** they have led at UCLouvain. Both are mapped onto a common grid of "
+    "10 research areas and 46 sub-areas, shown below. This grid was built from the topics "
+    "that actually appear in ELI publications and projects, so that every research group "
+    "finds its place in it (marine biology, microbiology, forests, planetary science, "
+    "One Health, etc.)."
     )
 
 st.write(
-    "For each academic, "
-    "a list of scientific publications was retrieved from the [Scopus](https://www.scopus.com/) database. "
-    "A keyword analysis was then performed using [VOSviewer](https://www.vosviewer.com), based on both Author "
-    "Keywords and Index Keywords. This analysis generated a keywords occurrence map "
-    "for each academic, highlighting the most prominent research topics within their "
-    "publication record. "
-    "For academics with an insufficient number of publications indexed in Scopus, "
-    "publication data were retrieved from the [OpenAlex](https://openalex.org) database. "
-    )
-    
-st.write(
-    "For each academic, the 50 most frequently occurring keywords were extracted "
-    "from the VOSviewer analysis. A weight was assigned to each keyword according to "
-    "its frequency of occurrence, providing an estimate of its relative importance "
-    "within the academic's research portfolio. The complete set of weighted keywords "
-    "for all academics was subsequently analyzed using Microsoft Copilot. Based on "
-    "this corpus, Copilot identified a classification structure composed "
-    "of 10 main research areas and 5 sub-areas within each research areas. "
-    )
-    
-st.write(
-	"In a second step, the 50 largest weighted keywords of each academic was submitted "
-    "to Copilot in order to assign the most relevant research sub-areas. "
-    "For each academic, up to five research sub-areas were attributed. "
-    "A score was also assigned to each subdomain to reflect the relative level of "
-    "engagement and specialization of the academic within that research area."
+    "**Publications.** The publication list of each academic was exported from "
+    "[Scopus](https://www.scopus.com/) and completed with references found only in "
+    "[OpenAlex](https://openalex.org) (these count for half, as OpenAlex attributions are "
+    "less reliable). Each publication is assigned to one or more sub-areas from its "
+    "author and index keywords, or, when no keyword is informative, from its title and "
+    "abstract. Overly generic keywords (e.g. *article*, *human*, *soil*, country names) are "
+    "ignored. Each publication counts once and is shared among the sub-areas it covers."
     )
 
+st.write(
+    "**Research projects.** Projects recorded at UCLouvain since 2013 were classified in "
+    "the same grid from their titles and keywords. Administrative agreements, start-up "
+    "grants and other projects without a scientific topic were left out."
+    )
+
+st.write(
+    "**Recent work counts more.** A publication from ten years ago weighs half as much as "
+    "a publication from this year (eight years for projects), so that profiles reflect "
+    "current expertise rather than past topics."
+    )
+
+st.write(
+    "**Combining both sources.** For each academic, the share of each sub-area is computed "
+    "as 70% publications and 30% projects (or from a single source when only one is "
+    "available). Up to five sub-areas covering at least 5% of the academic's work are shown. "
+    "The indicator reflects that share: ●○○○○ below 15%, ●●○○○ around 20%, ●●●○○ around 30%, "
+    "●●●●○ around 40% and ●●●●● 45% or more. The keywords listed next to each sub-area are "
+    "the ones that contributed most to it."
+    )
+
+st.write(
+    "The keyword maps shown in each profile were produced with "
+    "[VOSviewer](https://www.vosviewer.com) from the same Scopus publications. They were used "
+    "to check the classification: the main sub-area obtained from publications matches the "
+    "one suggested by the VOSviewer keywords for 46 of the 47 academics."
+    )
 
 st.write("Below is the classification structure of the research areas in ELI.")
 
