@@ -372,7 +372,7 @@ def display_projects(nom, prenom, subdomain_map):
         return
     mine = mine.sort_values(["annee_debut", "annee_fin"], ascending=False)
 
-    st.subheader("Research projects", anchor=False)
+    st.subheader("Research projects in ELI", anchor=False)
 
     n = len(mine)
     first_year = mine["annee_debut"].replace("", None).dropna().min()
