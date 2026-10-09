@@ -341,6 +341,71 @@ def display_profile_links(nom, prenom):
         st.markdown("".join(badges), unsafe_allow_html=True)
 
 
+# ------------------------------------------------------------------
+# Projets de recherche (ELI_projects.csv, produit en local par projets_pour_app.py)
+# ------------------------------------------------------------------
+
+MAX_PROJECTS_LISTED = 10
+
+
+@st.cache_data
+def load_projects(path="ELI_projects.csv"):
+    """Projets à afficher (colonne afficher = oui), vide si le fichier manque."""
+    try:
+        projects = pd.read_csv(path, sep=";", dtype=str).fillna("")
+    except FileNotFoundError:
+        return pd.DataFrame()
+    projects = projects[projects["afficher"].str.strip().str.lower() == "oui"].copy()
+    projects["key"] = [
+        f"{sanitize(n)}_{sanitize(p)}".lower() for n, p in zip(projects["nom"], projects["prenom"])
+    ]
+    return projects
+
+
+def display_projects(nom, prenom, subdomain_map):
+    """Synthèse des projets d'un académique + liste des plus récents (repliable)."""
+    projects = load_projects()
+    if projects.empty:
+        return
+    mine = projects[projects["key"] == f"{sanitize(nom)}_{sanitize(prenom)}".lower()]
+    if mine.empty:
+        return
+    mine = mine.sort_values(["annee_debut", "annee_fin"], ascending=False)
+
+    st.subheader("Research projects", anchor=False)
+
+    n = len(mine)
+    first_year = mine["annee_debut"].replace("", None).dropna().min()
+    ongoing = (mine["en_cours"] == "oui").sum()
+    coordinated = (mine["role"] == "Coordinator").sum()
+    summary = f"**{n} project{'s' if n > 1 else ''}**"
+    if first_year:
+        summary += f" since {first_year}"
+    details = []
+    if ongoing:
+        details.append(f"{ongoing} ongoing")
+    if coordinated:
+        details.append(f"coordinator of {coordinated}")
+    if details:
+        summary += " · " + " · ".join(details)
+    st.markdown(summary)
+
+    by_subdomain = mine["sous_domaine"].value_counts()
+    st.caption(
+        "Main topics: " + " · ".join(
+            f"{subdomain_map.get(code, {}).get('subdomain_title', code)} ({count})"
+            for code, count in by_subdomain.head(5).items()
+        )
+    )
+
+    with st.expander(f"Most recent projects ({min(n, MAX_PROJECTS_LISTED)} of {n})"):
+        for _, p in mine.head(MAX_PROJECTS_LISTED).iterrows():
+            years = p["annee_debut"] if p["annee_debut"] == p["annee_fin"] else f"{p['annee_debut']}–{p['annee_fin']}"
+            head = f"**{p['acronyme']}** – " if p["acronyme"] else ""
+            meta = " · ".join(x for x in (years, p["role"]) if x)
+            st.markdown(f"- {head}{p['titre']}  \n  :gray[{meta}]")
+
+
 def display_profile(researcher, subdomain_map):
 
     fullname = (
@@ -433,6 +498,8 @@ def display_profile(researcher, subdomain_map):
             
                 st.markdown(
                     f"- **{item['title']}**")
+
+    display_projects(researcher["nom"], researcher["prenom"], subdomain_map)
 
     #Vosviewer map
     st.subheader("Keywords mapping")
