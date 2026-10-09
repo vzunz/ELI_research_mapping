@@ -390,6 +390,13 @@ def display_projects(nom, prenom, subdomain_map):
         summary += " · " + " · ".join(details)
     st.markdown(summary)
 
+    if "financement" in mine.columns:
+        by_funder = mine.loc[mine["financement"] != "", "financement"].value_counts()
+        if not by_funder.empty:
+            st.markdown(
+                "Funding: " + " · ".join(f"{name} ({count})" for name, count in by_funder.items())
+            )
+
     by_subdomain = mine["sous_domaine"].value_counts()
     st.caption(
         "Main topics: " + " · ".join(
@@ -402,7 +409,7 @@ def display_projects(nom, prenom, subdomain_map):
         for _, p in mine.head(MAX_PROJECTS_LISTED).iterrows():
             years = p["annee_debut"] if p["annee_debut"] == p["annee_fin"] else f"{p['annee_debut']}–{p['annee_fin']}"
             head = f"**{p['acronyme']}** – " if p["acronyme"] else ""
-            meta = " · ".join(x for x in (years, p["role"]) if x)
+            meta = " · ".join(x for x in (years, p["role"], p.get("programme", "")) if x)
             st.markdown(f"- {head}{p['titre']}  \n  :gray[{meta}]")
 
 
