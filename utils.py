@@ -32,13 +32,13 @@ def header_logo():
 def load_data():
 
     researchers = pd.read_csv(
-        "ELI_classification_aca_04.csv",
+        "ELI_classification_aca.csv",
         sep=";",
         dtype=str
     ).fillna("")
 
     domains = pd.read_csv(
-        "domain_subdomain_03.csv",
+        "domain_subdomain.csv",
         sep=";",
         dtype=str
     ).fillna("")
