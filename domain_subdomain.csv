@@ -1,0 +1,47 @@
+Code;Subdomain title;Domain title
+D1.1.;Climate modelling and Earth system dynamics;D1. Climate and cryosphere
+D1.2.;Paleoclimate and Quaternary environments;D1. Climate and cryosphere
+D1.3.;Polar regions, sea ice and ice sheets;D1. Climate and cryosphere
+D1.4.;Climate prediction, variability and extremes;D1. Climate and cryosphere
+D2.1.;Ocean and coastal hydrodynamics;D2. Oceans and marine life
+D2.2.;Coral reefs and marine connectivity;D2. Oceans and marine life
+D2.3.;Marine biology and bioluminescence;D2. Oceans and marine life
+D3.1.;Soil erosion, sediments and landscape dynamics;D3. Soil, water and geochemistry
+D3.2.;Soil organic matter, carbon and nutrient cycles;D3. Soil, water and geochemistry
+D3.3.;Weathering, isotopes and permafrost biogeochemistry;D3. Soil, water and geochemistry
+D3.4.;Hydrology, groundwater and solute transport;D3. Soil, water and geochemistry
+D3.5.;Volcanic processes and geohazards;D3. Soil, water and geochemistry
+D3.6.;Trace elements, pollution and biomonitoring;D3. Soil, water and geochemistry
+D4.1.;Forest ecology, tree diversity and silviculture;D4. Forests and terrestrial ecosystems
+D4.2.;Forest health and long-term monitoring;D4. Forests and terrestrial ecosystems
+D4.3.;Ecosystem carbon and water fluxes;D4. Forests and terrestrial ecosystems
+D5.1.;Population ecology, dispersal and metapopulations;D5. Biodiversity, ecology and evolution
+D5.2.;Behavioural and evolutionary ecology;D5. Biodiversity, ecology and evolution
+D5.3.;Pollination and plant-animal interactions;D5. Biodiversity, ecology and evolution
+D5.4.;Animal movement and migration;D5. Biodiversity, ecology and evolution
+D5.5.;Biodiversity conservation and global change;D5. Biodiversity, ecology and evolution
+D6.1.;Mycorrhizal fungi and plant-microbe interactions;D6. Microbiology and biotechnology
+D6.2.;Bacterial genetics, phages and plasmids;D6. Microbiology and biotechnology
+D6.3.;Insect-microbe symbioses;D6. Microbiology and biotechnology
+D6.4.;Environmental biotechnology, bioremediation and biorefinery;D6. Microbiology and biotechnology
+D7.1.;Roots, water uptake and plant hydraulics;D7. Plant biology
+D7.2.;Plant abiotic stress (salinity, drought, heat, metals);D7. Plant biology
+D7.3.;Plant genetics, breeding and phenotyping;D7. Plant biology
+D7.4.;Plant reproduction and floral biology;D7. Plant biology
+D8.1.;Agronomy and cropping systems;D8. Agriculture, plant health and food
+D8.2.;Agroecology and sustainable farming systems;D8. Agriculture, plant health and food
+D8.3.;Plant pathology, pests and plant health risk;D8. Agriculture, plant health and food
+D8.4.;Biological control and biostimulants;D8. Agriculture, plant health and food
+D8.5.;Food systems, food security and nutrition;D8. Agriculture, plant health and food
+D8.6.;Livestock systems;D8. Agriculture, plant health and food
+D9.1.;Land use, land-cover change and deforestation;D9. Land use, society and health
+D9.2.;Supply chains, trade and sustainability governance;D9. Land use, society and health
+D9.3.;Agricultural and environmental economics;D9. Land use, society and health
+D9.4.;Rural development, livelihoods and gender;D9. Land use, society and health
+D9.5.;One Health, ticks and vector-borne diseases;D9. Land use, society and health
+D10.1.;Satellite Earth observation and crop monitoring;D10. Remote sensing, geophysics and data science
+D10.2.;Microwave remote sensing and soil moisture;D10. Remote sensing, geophysics and data science
+D10.3.;Near-surface geophysics (radar, electromagnetic methods);D10. Remote sensing, geophysics and data science
+D10.4.;Geostatistics and spatial analysis;D10. Remote sensing, geophysics and data science
+D10.5.;Numerical modelling and machine learning;D10. Remote sensing, geophysics and data science
+D10.6.;Planetary geodesy, Earth rotation and planetary interiors;D10. Remote sensing, geophysics and data science
