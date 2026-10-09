@@ -286,6 +286,61 @@ def display_vosviewer_iframe(nom, prenom, base_url=VOSVIEWER_DATA_BASE_URL, heig
     )
 
 
+# ------------------------------------------------------------------
+# Identifiants bibliographiques (Scopus, OpenAlex, Google Scholar)
+# ------------------------------------------------------------------
+# ELI_identifiers.csv : nom;prenom;scopus_id;openalex_id;scholar_id
+# On peut y mettre l'identifiant seul ou l'URL complète du profil.
+
+PROFILE_LINKS = [
+    ("scopus_id", "Scopus", "https://www.scopus.com/authid/detail.uri?authorId={}", "#E9711C"),
+    ("openalex_id", "OpenAlex", "https://openalex.org/authors/{}", "#7B4FA0"),
+    ("scholar_id", "Google Scholar", "https://scholar.google.com/citations?user={}", "#4285F4"),
+]
+
+
+@st.cache_data
+def load_identifiers(path="ELI_identifiers.csv"):
+    """Renvoie {cle nom_prenom: {scopus_id, openalex_id, scholar_id}} (vide si le fichier manque)."""
+    try:
+        ids = pd.read_csv(path, sep=";", dtype=str).fillna("")
+    except FileNotFoundError:
+        return {}
+    return {
+        f"{sanitize(r['nom'])}_{sanitize(r['prenom'])}".lower(): r.to_dict()
+        for _, r in ids.iterrows()
+    }
+
+
+def _profile_id(value):
+    """Accepte un identifiant ou une URL de profil et renvoie l'identifiant."""
+    value = str(value).strip()
+    if "user=" in value:                      # Google Scholar
+        value = value.split("user=")[1].split("&")[0]
+    elif "authorId=" in value:                # Scopus
+        value = value.split("authorId=")[1].split("&")[0]
+    elif "openalex.org" in value:             # OpenAlex
+        value = value.rstrip("/").split("/")[-1]
+    return value
+
+
+def display_profile_links(nom, prenom):
+    """Affiche les identifiants Scopus / OpenAlex / Google Scholar sous forme de liens."""
+    ids = load_identifiers().get(f"{sanitize(nom)}_{sanitize(prenom)}".lower(), {})
+    badges = []
+    for col, label, url, color in PROFILE_LINKS:
+        value = _profile_id(ids.get(col, ""))
+        if value:
+            badges.append(
+                f'<a href="{url.format(value)}" target="_blank" rel="noopener" '
+                f'style="text-decoration:none; margin-right:0.6rem; padding:0.15rem 0.5rem; '
+                f'border:1px solid {color}; border-radius:0.4rem; color:{color}; font-size:0.85rem;">'
+                f'{label}&nbsp;·&nbsp;{value}</a>'
+            )
+    if badges:
+        st.markdown("".join(badges), unsafe_allow_html=True)
+
+
 def display_profile(researcher, subdomain_map):
 
     fullname = (
@@ -305,6 +360,8 @@ def display_profile(researcher, subdomain_map):
         unsafe_allow_html=True,
         text_alignment="left"
     )
+
+    display_profile_links(researcher["nom"], researcher["prenom"])
 
     st.subheader("Research areas",anchor=None)
     
