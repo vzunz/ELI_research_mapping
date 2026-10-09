@@ -346,6 +346,7 @@ def display_profile_links(nom, prenom):
 # ------------------------------------------------------------------
 
 MAX_PROJECTS_LISTED = 10
+CORDIS_URL = "https://cordis.europa.eu/project/id/{}"
 
 
 @st.cache_data
@@ -405,12 +406,25 @@ def display_projects(nom, prenom, subdomain_map):
         )
     )
 
+    if "cordis_id" in mine.columns:
+        european = mine[mine["cordis_id"] != ""]
+        if not european.empty:
+            with st.expander(f"European projects – Horizon Europe and Horizon 2020 ({len(european)})"):
+                for _, p in european.iterrows():
+                    st.markdown(project_line(p) + (f"  \n  :gray[Call topic: {p['topic']}]" if p["topic"] else ""))
+
     with st.expander(f"Most recent projects ({min(n, MAX_PROJECTS_LISTED)} of {n})"):
         for _, p in mine.head(MAX_PROJECTS_LISTED).iterrows():
-            years = p["annee_debut"] if p["annee_debut"] == p["annee_fin"] else f"{p['annee_debut']}–{p['annee_fin']}"
-            head = f"**{p['acronyme']}** – " if p["acronyme"] else ""
-            meta = " · ".join(x for x in (years, p["role"], p.get("programme", "")) if x)
-            st.markdown(f"- {head}{p['titre']}  \n  :gray[{meta}]")
+            st.markdown(project_line(p))
+
+
+def project_line(p):
+    """- **ACRONYME** – titre · lien CORDIS, puis années · rôle · programme."""
+    years = p["annee_debut"] if p["annee_debut"] == p["annee_fin"] else f"{p['annee_debut']}–{p['annee_fin']}"
+    head = f"**{p['acronyme']}** – " if p["acronyme"] else ""
+    link = f" · [CORDIS]({CORDIS_URL.format(p['cordis_id'])})" if p.get("cordis_id", "") else ""
+    meta = " · ".join(x for x in (years, p["role"], p.get("programme", "")) if x)
+    return f"- {head}{p['titre']}{link}  \n  :gray[{meta}]"
 
 
 def display_profile(researcher, subdomain_map):
