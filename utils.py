@@ -369,7 +369,7 @@ def display_profile(researcher, subdomain_map):
 
                 st.markdown(
                     f"- **{item['title']}** • Keywords: {strip_keyword_weights(item['keywords'])}"
-                    f"- **{item['title']}**"
+                    #f"- **{item['title']}**"
                 )
                 
             else:
